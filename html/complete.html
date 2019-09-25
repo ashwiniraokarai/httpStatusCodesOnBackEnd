@@ -1,0 +1,46 @@
+<!-- web-projects/http-response-codes/complete.html-->
+
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+	<meta charset="UTF-8">
+	<title>Register Page</title>
+</head>
+<body>
+	<h2>No frills page</h2>
+	<form id="form">
+		<input type = "text" name = "name" value="AceKyd">
+		<input type = "email" name = "email" value="ace@kyd.com">
+		<input type = "password" name = "password" value="acekyd">
+		<input type = "submit" name = "submit">
+	</form>
+	<script type = "text/javascript">
+	/*------------handle form submission----------------------*/
+	let form = document.getElementById("form");
+	//create an object to read data values
+	let data = {
+		name:form.elements.name.value
+		email : form.elements.email.value,
+		password:form.elements.password.value
+	}
+	//add event listener for when user submits the form (i.e, performs a POST on the register.html page!)
+	form.addEventListener("submit",(e) => {
+		e.preventDefault();
+		fetch('http://localhost:3000/complete-registration',{
+			method: "POST",
+			body: JSON.stringify(data), //convert the data object you defined into a JSON string
+			headers:{
+				'Content-Type':'application/json'
+			}
+		}).then(res => {
+		console.log(res);
+		return res.json();
+		}).then(res => {
+		alert(res.message)
+		}).catch(error => {
+		console.error("Error:",error)
+		})
+	})
+	</script>
+</body>
+</html>
